@@ -14,13 +14,7 @@ class grille {
 //  [3, 4, 5, 2, 8, 6, 1, 7, 0]
 //];
 
-    x: number
-    y: number
-
     constructor() {
-        this.x = 0
-        this.y = 0
-
         grille.mattrice = this.generateGrille()
     }
 
@@ -43,6 +37,7 @@ class grille {
 
         do {
             number = -1
+            const possible: number[] = []
 
             if ((Date.now() - startTime) > timeoutMs) {
                 console.warn('too long')
@@ -50,10 +45,13 @@ class grille {
                 for(let n=1; n<=9; n++){
                     if(!this.isInColonne(n, y) && !this.isInLigne(n, x) && !this.isInSquare(n, x, y)) {
                         console.log(n)
-                        number = n
+                        possible.push(n)
                     }
                 }
-                
+
+                const index = Math.floor(Math.random() * possible.length)
+                number = possible[index]
+
                 break
             }
 
