@@ -24,7 +24,7 @@ export default class grille {
     }
 
     generateGrille (): mattrice {
-        //this.deletingCase()
+        this.deletingCase()
         this.permutingThings()
 
         return grille.mattrice
@@ -32,26 +32,65 @@ export default class grille {
 
     permutingThings (): void {
         for(let i: number=0; i<this.generateNum(10000, 1000); i++){
-            this.permutingSquare()
+            this.permutingSquareByX()
+            this.permutingSquareByY()
             this.permutingColum()
             this.permutingLigne()
         }
     }
 
     generateNumsInSameBlock (): numbers {
-        const block: number = this.generateNum(2)
-        let num1: number = block * 3 + this.generateNum(2)
-        let num2: number = block * 3 + this.generateNum(2)
+        const [block] = this.generatenumsSquare(1)
+        let num1: number = block + this.generateNum(2)
+        let num2: number = block + this.generateNum(2)
 
         while (num1==num2) {
-            num2 = block * 3 + this.generateNum(2)
+            num2 = block + this.generateNum(2)
         }
 
         return { num1, num2 }
     }
+
+    generatenumsSquare (howMuch: number): number[] {
+        const result: number[] = []
+
+        for(let i: number=0; i<howMuch; i++) {
+            result.push(this.generateNum(2) * 3)
+        }
+
+        return result
+    }
     
-    permutingSquare (): void {
-         
+    permutingSquareByX (): void {
+        let [blocks, block1x, block2x] = this.generatenumsSquare(3)
+        
+        while (block1x == block2x) {
+            block2x = this.generateNum(2) * 3
+        }
+
+        for(let x: number=0; x<3; x++){
+            for(let y: number=0; y<3; y++){
+                const temp: nullNumber = grille.mattrice[x+block1x][y+blocks]
+                grille.mattrice[x+block1x][y+blocks] = grille.mattrice[x+block2x][y+blocks]
+                grille.mattrice[x+block2x][y+blocks] = temp
+            }
+        }
+    }
+
+    permutingSquareByY (): void {
+        let [blocks, block1y, block2y] = this.generatenumsSquare(3)
+        
+        while (block1y == block2y) {
+            block2y = this.generateNum(2) * 3
+        }
+
+        for(let x: number=0; x<3; x++){
+            for(let y: number=0; y<3; y++){
+                const temp: nullNumber = grille.mattrice[x+blocks][y+block1y]
+                grille.mattrice[x+blocks][y+block1y] = grille.mattrice[x+blocks][y+block2y]
+                grille.mattrice[x+blocks][y+block2y] = temp
+            }
+        }
     }
 
     permutingColum (): void {
@@ -73,10 +112,12 @@ export default class grille {
     }
 
     deletingCase (): void {
-        for(let i: number=0; i<50; i++) {
+        let i: number = 0
+        while(i<50) {
             const coordinate: coordinate = this.generateCoorOfCase()
             if (grille.mattrice[coordinate.x][coordinate.y] !== null) {
                 grille.mattrice[coordinate.x][coordinate.y] = null
+                i++
             }
         }
     }
