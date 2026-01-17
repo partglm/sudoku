@@ -1,5 +1,5 @@
-import utils from '../utils/generatorNumber'
-import permutator from './permutator'
+import utils from '../utils/generatorNumber.js'
+import permutator from './permutator.js'
 
 type coordinate = {x: number, y: number}
 type mattrice = (number | null)[][]

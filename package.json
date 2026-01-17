@@ -16,9 +16,11 @@
   "author": "partglm",
   "main": "src/display/main.js",
   "scripts": {
-    "start": "electron . --no-sandbox --disable-gpu --disable-software-rasterizer"
+    "build": "npx tsc",
+    "start": "npm run build && electron ."
   },
   "dependencies": {
-    "electron": "^39.2.7"
+    "electron": "^39.2.7",
+    "typescript": "^5.9.3"
   }
 }
