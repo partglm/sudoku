@@ -14,9 +14,9 @@
   },
   "license": "ISC",
   "author": "partglm",
-  "main": "main.js",
+  "main": "src/display/main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "electron . --no-sandbox --disable-gpu --disable-software-rasterizer"
   },
   "dependencies": {
     "electron": "^39.2.7"

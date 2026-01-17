@@ -1,5 +1,5 @@
-import utils from "../utils/generatorNumber.ts"
-import grille from "./generatorGrille.ts"
+import utils from "../utils/generatorNumber"
+import grille from "./generatorGrille"
 
 type nullNumber = (null | number)
 type listNumber = (null | number)[]
