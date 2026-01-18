@@ -6,9 +6,9 @@ console.log(grille.mattrice)
 
 const mattriceID = document.getElementById('mattrice')
 for (let x = 0; x < 9; x++) {
-    const classColonne = `colonne${x}`
+        const classLigne = `ligne${x}`
     for (let y = 0; y < 9; y++) {
-        const classLigne = `ligne${y}`
+    const classColonne = `colonne${y}`
 
         const newElement = document.createElement('div')
         newElement.classList.add(classColonne)
@@ -21,9 +21,7 @@ for (let x = 0; x < 9; x++) {
         const number = grille.mattrice[x][y]
 
         if (number == null) {
-            inputElement.type = 'number'
-            inputElement.min = '1'
-            inputElement.max = '9'
+            inputElement.type = 'text'
             inputElement.maxLength = 1
 
             newElement.appendChild(inputElement)
@@ -36,11 +34,11 @@ for (let x = 0; x < 9; x++) {
     }
 }
 
-//document.addEventListener("input", (item) => { 
-//    if (item.target.tagName === "INPUT") {
-//        if (typeof item.target.value !== 'number') {
-//            item.target.value = ''
-//            console.log("cleared an input")
-//        }
-//    }
-//})
+document.addEventListener("input", (item) => { 
+    if (item.target.tagName === "INPUT") {
+        if (!item.target.value.match(/[0-9]/)) {
+            item.target.value = ''
+            console.log("cleared an input")
+        }
+    }
+})

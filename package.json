@@ -18,7 +18,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "npm run build && electron .",
-    "electron": "electron ."
+    "debug": "electron --inspect=5858 ."
   },
   "dependencies": {
     "electron": "^39.2.7",

@@ -6,12 +6,12 @@ type listNumber = (null | number)[]
 
 export default class permutator {
         permutingThings (): void {
-            for(let i: number=0; i< utils.Number(10000, 1000); i++){
+            //for(let i: number=0; i< utils.Number(10000, 1000); i++){
                 this.permutingSquareByX()
-                this.permutingSquareByY()
-                this.permutingColum()
-                this.permutingLigne()
-            }
+                //this.permutingSquareByY()
+                //this.permutingColum()
+                //this.permutingLigne()
+            //}
         }
         
         permutingSquareByX (): void {
