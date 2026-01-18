@@ -17,7 +17,8 @@
   "main": "src/display/main.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && electron ."
+    "start": "npm run build && electron .",
+    "electron": "electron ."
   },
   "dependencies": {
     "electron": "^39.2.7",

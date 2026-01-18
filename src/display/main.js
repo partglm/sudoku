@@ -18,7 +18,7 @@ function createWindow() {
         }
     })
 
-    mainWindow.loadFile(path.join(__dirname, 'grille.html'))
+    mainWindow.loadFile(path.join(__dirname, 'public/grille.html'))
 
     mainWindow.on("closed", () => {
         mainWindow = null
