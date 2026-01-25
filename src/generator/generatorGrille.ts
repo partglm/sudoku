@@ -33,7 +33,7 @@ export default class grille extends permutator {
     }
 
     generateGrille (): mattrice {
-        //this.deletingCase(this.toDelete)
+        this.deletingCase(this.toDelete)
         this.permutingThings()
 
         return grille.mattrice

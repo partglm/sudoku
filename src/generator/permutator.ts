@@ -4,44 +4,45 @@ import grille from "./generatorGrille.js"
 type nullNumber = (null | number)
 type listNumber = (null | number)[]
 
+//TODO: permute symbol
+
 export default class permutator {
         permutingThings (): void {
-            //for(let i: number=0; i< utils.Number(10000, 1000); i++){
-                this.permutingSquareByX()
-                //this.permutingSquareByY()
-                //this.permutingColum()
-                //this.permutingLigne()
-            //}
+            for(let i: number=0; i< utils.Number(10000, 1000); i++){
+                this.permutingStacksX()
+                this.permutingStacksY()
+                this.permutingColum()
+                this.permutingLigne()
+                this.permuteNumber()
+            }
         }
         
-        permutingSquareByX (): void {
-            let [blocks, block1x, block2x] = utils.NumsSquare(3)
+        permutingStacksX (): void {
+            let [bande1,bande2]: number[] = utils.NumsSquare(2)
             
-            while (block1x == block2x) {
-                [block2x] = utils.NumsSquare(1)
+            while (bande1 === bande2) {
+                [bande2] = utils.NumsSquare(1)
             }
-    
-            for(let x: number=0; x<3; x++){
-                for(let y: number=0; y<3; y++){
-                    const temp: nullNumber = grille.mattrice[x+block1x][y+blocks]
-                    grille.mattrice[x+block1x][y+blocks] = grille.mattrice[x+block2x][y+blocks]
-                    grille.mattrice[x+block2x][y+blocks] = temp
-                }
+            
+            for (let i: number=0; i<3; i++) {
+                const temp: listNumber = grille.mattrice[bande1+i]
+                grille.mattrice[bande1+i] = grille.mattrice[bande2+i]
+                grille.mattrice[bande2+i] = temp
             }
         }
     
-        permutingSquareByY (): void {
-            let [blocks, block1y, block2y] = utils.NumsSquare(3)
+        permutingStacksY (): void {
+            let [bande1,bande2]: number[] = utils.NumsSquare(2)
             
-            while (block1y == block2y) {
-                [block2y] = utils.NumsSquare(1)
+            while (bande1 === bande2) {
+                [bande2] = utils.NumsSquare(1)
             }
-    
-            for(let x: number=0; x<3; x++){
-                for(let y: number=0; y<3; y++){
-                    const temp: nullNumber = grille.mattrice[x+blocks][y+block1y]
-                    grille.mattrice[x+blocks][y+block1y] = grille.mattrice[x+blocks][y+block2y]
-                    grille.mattrice[x+blocks][y+block2y] = temp
+
+            for (let colonne: number=0; colonne<3; colonne++) {
+                for (let i: number=0; i<9; i++) {
+                    const temp: nullNumber = grille.mattrice[i][bande1+colonne]
+                    grille.mattrice[i][bande1+colonne] = grille.mattrice[i][bande2+colonne]
+                    grille.mattrice[i][bande2+colonne] = temp
                 }
             }
         }
@@ -62,5 +63,22 @@ export default class permutator {
             const temp: listNumber = grille.mattrice[ligne1]
             grille.mattrice[ligne1] = grille.mattrice[ligne2]
             grille.mattrice[ligne2] = temp
+        }
+
+        permuteNumber (): void {
+            const num1 = utils.Number(8) + 1
+            const num2 = utils.Number(8) + 1
+            
+            for (let x: number=0; x<9; x++) {
+                for (let y: number=0; y<9; y++) {
+                    if (grille.mattrice[x][y]==num1){
+                        grille.mattrice[x][y]=num2
+                    }else{
+                        if (grille.mattrice[x][y]==num2){
+                            grille.mattrice[x][y]=num1
+                        }
+                    }
+                }
+            }
         }
 }

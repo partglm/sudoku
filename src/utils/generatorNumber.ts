@@ -48,5 +48,5 @@ export default class utils {
             }
     
             return { num1, num2 }
-        }
+    }
 }
