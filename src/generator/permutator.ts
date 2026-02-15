@@ -4,7 +4,6 @@ import grille from "./generatorGrille.js"
 type nullNumber = (null | number)
 type listNumber = (null | number)[]
 
-//TODO: permute symbol
 
 export default class permutator {
         permutingThings (): void {

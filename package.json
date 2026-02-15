@@ -18,10 +18,16 @@
   "scripts": {
     "build": "npx tsc",
     "start": "npm run build && electron .",
-    "debug": "electron --inspect=5858 ."
+    "debug": "electron --inspect=5858 .",
+    "test": "jest"
   },
   "dependencies": {
-    "electron": "^39.2.7",
+    "electron": "^39.2.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   }
 }
