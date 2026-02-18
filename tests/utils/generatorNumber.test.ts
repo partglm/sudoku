@@ -44,10 +44,61 @@ describe("class utils for generating numbers", () => {
                 const deletedCases = [{x: 8, y: 1},{x: 2, y: 5},{x: 3, y: 4},{x: 7, y: 1},{x: 6, y: 5},{x: 3, y: 7}]
                 const result = utils.coordinate(deletedCases)
 
-                const exist = deletedCases.some(deletedCase => deletedCase.x === result.x && deletedCase.x === result.x)
+                const exist = deletedCases.some(deletedCase => deletedCase.x === result.x && deletedCase.y === result.y)
 
                 expect(exist).toBe(false)
             }
+        })
+    })
+
+    describe("numSquare()", () => {
+        it("return either: 0, 3 or 6 (20 runs)", () => {
+            for (let i = 0; i < 20; i++) {
+                const response = [0,3,6]
+                const [result] = utils.NumsSquare(1)
+
+                let exist = false
+                if (response.includes(result)) exist = true
+            
+                expect(exist).toBe(true)
+            }
+        })
+
+        it("return 20 numbers that is either: 0, 3 or 6", () => {
+            const response = [0,3,6]
+            const result = utils.NumsSquare(20)
+
+            let exist = false
+
+            result.forEach(res => {
+                if (response.includes(res)) exist = true
+            })
+            
+            expect(exist).toBe(true)
+        })
+    })
+
+    describe("numsInSameBlock()", () => {
+        it("return two different numbers", () => {
+            const result = utils.numsInSameBlock()
+
+            expect(result.num1 !== result.num2).toBe(true)
+        })
+
+        it("return two numbers between 0 and 2/3 and 5/6 and 8", () => {
+            const result = utils.numsInSameBlock()
+            const possible = [
+                {num1: 0, num2: 1},{num1: 3, num2: 4},{num1: 6, num2: 7},
+                {num1: 0, num2: 2},{num1: 3, num2: 5},{num1: 6, num2: 8},
+                {num1: 1, num2: 2},{num1: 4, num2: 5},{num1: 7, num2: 8}]
+
+            if (result.num1 > result.num2) {
+                [result.num1, result.num2] = [result.num2, result.num1]
+            }
+
+            const exist = possible.some(nums => result.num1 === nums.num1 && result.num2 === nums.num2)
+
+            expect(exist).toBe(true)
         })
     })
 })
