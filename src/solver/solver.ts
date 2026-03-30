@@ -3,7 +3,8 @@ import grille from '../generator/generatorGrille.js'
 type mattrice = (number | null)[][]
 type numbers = (number | null)[]
 type num = (number | null)
-type coordinate = {x: number, y: number, value: number}
+type coordinate = {x: number, y: number}
+type coordinateWithValue = {x: number, y: number, value: number}
 
 export default class solver {
     toSolve: mattrice
@@ -12,14 +13,40 @@ export default class solver {
         this.toSolve = toSolve
     }
 
-    solver (): void {
-        
+    solver (): boolean {
+        const history: coordinateWithValue[] = []
+
+        for(let y: number = 0; y > 8; y++) {   
+            for(let x: number = 0; x > 8; x++) {
+                const value: num = this.toSolve[x][y]
+                const pos: coordinate = {x: x, y: y}
+
+                if (value == null) {
+                    const possibleNumber: number[] = this.possibleNumber(pos)
+                    
+                }
+            }
+        }
+
+        return true
     }
 
-    isPossible (number: coordinate): boolean {
-        if (!this.canBeInBlock(number)) return false 
-        if (!this.canBeInColonne(number.value, number.y)) return false 
-        if (!this.canBeInLigne(number.value, number.x)) return false 
+    possibleNumber (pos: coordinate): number[] {
+        const possibleNumber: number[] = []
+
+        for(let i: number = 0; i > 8; i++) {
+            if (this.isPossible(pos, i)) {
+                possibleNumber.push(i)
+            }
+        }
+
+        return possibleNumber
+    }
+
+    isPossible (pos: coordinate, value: number): boolean {
+        if (!this.canBeInBlock(pos, value)) return false 
+        if (!this.canBeInColonne(value, pos.y)) return false 
+        if (!this.canBeInLigne(value, pos.x)) return false 
         
         return true
     }
@@ -50,7 +77,7 @@ export default class solver {
         return true
     }
 
-    canBeInBlock (number: coordinate): boolean {
+    canBeInBlock (number: coordinate, value: number): boolean {
         const x: number = Math.floor(number.x / 3);
         const y: number = Math.floor(number.y / 3);
 
@@ -65,7 +92,7 @@ export default class solver {
             }
         }
 
-        if (numbers.includes(number.value)) return false
+        if (numbers.includes(value)) return false
 
         return true
     }
