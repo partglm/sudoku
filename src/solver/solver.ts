@@ -1,5 +1,3 @@
-import grille from '../generator/generatorGrille.js'
-
 type mattrice = (number | null)[][]
 type numbers = (number | null)[]
 type num = (number | null)
@@ -8,39 +6,43 @@ type coordinateWithValue = {x: number, y: number, value: number}
 
 export default class solver {
     toSolve: mattrice
-    solved: boolean | mattrice
+    status: boolean
 
     constructor(toSolve: mattrice) {
-        this.toSolve = toSolve
+        this.toSolve = toSolve.map(row => [...row]);
 
-        this.solved = this.solver()
+        this.status = this.solver()
     }
 
-    solver (): mattrice {
+    solver (): boolean {
         const history: coordinateWithValue[] = []
 
-        for(let y: number = 0; y < 8; y++) {   
-            for(let x: number = 0; x < 8; x++) {
+        for(let y: number = 0; y < 9; y++) {   
+            for(let x: number = 0; x < 9; x++) {
                 const value: num = this.toSolve[x][y]
                 const pos: coordinate = {x: x, y: y}
 
                 if (value == null) {
                     const possibleNumber: number[] = this.possibleNumber(pos)
-                    
-                    history.push({x: x, y: y, value: possibleNumber[0]})
 
-                    this.toSolve[x][y] = possibleNumber[0]
+                    console.log(possibleNumber)
+                    if (possibleNumber.length === 0) continue
+                    const replace = possibleNumber[0]
+                    
+                    history.push({x: x, y: y, value: replace})
+
+                    this.toSolve[x][y] = replace
                 }
             }
         }
 
-        return this.toSolve
+        return true
     }
 
     possibleNumber (pos: coordinate): number[] {
         const possibleNumber: number[] = []
 
-        for(let i: number = 0; i < 8; i++) {
+        for(let i: number = 1; i <= 9; i++) {
             if (this.isPossible(pos, i)) {
                 possibleNumber.push(i)
             }
@@ -60,8 +62,8 @@ export default class solver {
     canBeInColonne (number: number, colonne: number): boolean {
         const numbers: numbers = [] 
 
-        for(let i: number = 0; i < 8; i++) {
-            const num: num = grille.mattrice[i][colonne]
+        for(let i: number = 0; i < 9; i++) {
+            const num: num = this.toSolve[i][colonne]
             numbers.push(num)
         }
 
@@ -73,8 +75,8 @@ export default class solver {
     canBeInLigne (number: number, ligne: number): boolean {
         const numbers: numbers = [] 
 
-        for(let i: number = 0; i < 8; i++) {
-            const num: num = grille.mattrice[ligne][i]
+        for(let i: number = 0; i < 9; i++) {
+            const num: num = this.toSolve[ligne][i]
             numbers.push(num)
         }
 
@@ -92,7 +94,7 @@ export default class solver {
         for (let blockX: number = x; blockX < x + 3; blockX++) {
             for (let blockY: number = y; blockY < y + 3; blockY++) {
 
-                const num: num = grille.mattrice[blockX][blockY]
+                const num: num = this.toSolve[blockX][blockY]
                 numbers.push(num)
 
             }

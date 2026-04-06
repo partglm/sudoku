@@ -19,7 +19,8 @@
     "build": "npx tsc",
     "start": "npm run build && electron .",
     "debug": "electron --inspect=5858 .",
-    "test": "jest"
+    "test": "jest",
+    "dev": "npm run build && node a.js"
   },
   "dependencies": {
     "electron": "^39.8.5"
