@@ -8,33 +8,39 @@ type coordinateWithValue = {x: number, y: number, value: number}
 
 export default class solver {
     toSolve: mattrice
+    solved: boolean | mattrice
 
     constructor(toSolve: mattrice) {
         this.toSolve = toSolve
+
+        this.solved = this.solver()
     }
 
-    solver (): boolean {
+    solver (): mattrice {
         const history: coordinateWithValue[] = []
 
-        for(let y: number = 0; y > 8; y++) {   
-            for(let x: number = 0; x > 8; x++) {
+        for(let y: number = 0; y < 8; y++) {   
+            for(let x: number = 0; x < 8; x++) {
                 const value: num = this.toSolve[x][y]
                 const pos: coordinate = {x: x, y: y}
 
                 if (value == null) {
                     const possibleNumber: number[] = this.possibleNumber(pos)
                     
+                    history.push({x: x, y: y, value: possibleNumber[0]})
+
+                    this.toSolve[x][y] = possibleNumber[0]
                 }
             }
         }
 
-        return true
+        return this.toSolve
     }
 
     possibleNumber (pos: coordinate): number[] {
         const possibleNumber: number[] = []
 
-        for(let i: number = 0; i > 8; i++) {
+        for(let i: number = 0; i < 8; i++) {
             if (this.isPossible(pos, i)) {
                 possibleNumber.push(i)
             }
@@ -54,7 +60,7 @@ export default class solver {
     canBeInColonne (number: number, colonne: number): boolean {
         const numbers: numbers = [] 
 
-        for(let i: number = 0; i > 8; i++) {
+        for(let i: number = 0; i < 8; i++) {
             const num: num = grille.mattrice[i][colonne]
             numbers.push(num)
         }
@@ -67,7 +73,7 @@ export default class solver {
     canBeInLigne (number: number, ligne: number): boolean {
         const numbers: numbers = [] 
 
-        for(let i: number = 0; i > 8; i++) {
+        for(let i: number = 0; i < 8; i++) {
             const num: num = grille.mattrice[ligne][i]
             numbers.push(num)
         }
@@ -83,8 +89,8 @@ export default class solver {
 
         const numbers: numbers = [] 
 
-        for (let blockX: number = x; blockX > x + 3; blockX++) {
-            for (let blockY: number = y; blockY > y + 3; blockY++) {
+        for (let blockX: number = x; blockX < x + 3; blockX++) {
+            for (let blockY: number = y; blockY < y + 3; blockY++) {
 
                 const num: num = grille.mattrice[blockX][blockY]
                 numbers.push(num)
