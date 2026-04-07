@@ -2,7 +2,7 @@ type mattrice = (number | null)[][]
 type numbers = (number | null)[]
 type num = (number | null)
 type coordinate = {x: number, y: number}
-type HistoryOfCoordinate = {x: number, y: number, value: number, indexPossibleMove: number}
+type HistoryOfCoordinate = {x: number, y: number, id: number, indexPossibleMove: number}
 
 export default class solver {
     toSolve: mattrice
@@ -14,61 +14,27 @@ export default class solver {
         this.status = this.solver()
     }
 
-    solver (): boolean {
-        const history: HistoryOfCoordinate[] = []
-
-        while(this.SearchNullCase().x !== -1) {
-            const pos: coordinate = this.SearchNullCase()
-            const {x, y} = pos
-
-            const possibleNumber: number[] = this.possibleNumber(pos)
-
-            if (possibleNumber.length === 0) {
-                const lastMove = history[history.length - 1]
-                const posLastMove = {x: lastMove.x, y: lastMove.y}
-
-                this.toSolve[lastMove.x][lastMove.y] = null
-                const lastMovePossibleNumber = this.possibleNumber(posLastMove)
-
-                this.toSolve[lastMove.x][lastMove.y] = lastMovePossibleNumber[lastMove.indexPossibleMove + 1]
-            }
-
-            const replace = possibleNumber[0]
-                    
-            history.push({x: x, y: y, value: replace, indexPossibleMove: 0})
-                
-            this.toSolve[x][y] = replace
+    
+    recursiveSolver(): boolean {
+        const pos: coordinate = this.SearchNullCase()
+        if (pos.x === -1) {
+            return true
         }
 
-        return true
+        const possibleNumber: number[] = this.possibleNumber(pos)
+        for (let i = 0; i < possibleNumber.length; i++) {
+            this.toSolve[pos.x][pos.y] = possibleNumber[i]
+            if (this.recursiveSolver()) {
+                return true
+            }
+            this.toSolve[pos.x][pos.y] = null
+        }
 
-        //for(let y: number = 0; y < 9; y++) {   
-        //    for(let x: number = 0; x < 9; x++) {
-        //        const value: num = this.toSolve[x][y]
-        //        const pos: coordinate = {x: x, y: y}
-//
-        //        if (value == null) {
-        //            const possibleNumber: number[] = this.possibleNumber(pos)
-//
-        //            console.log(possibleNumber)
-        //            if (possibleNumber.length === 0) {
-        //                const lastMove = history[history.length - 1]
-        //                const posLastMove = {x: lastMove.x, y: lastMove.y}
-//
-        //                this.toSolve[lastMove.x][lastMove.y] = null
-        //                const lastMovePossibleNumber = this.possibleNumber(posLastMove)
-//
-        //                this.toSolve[lastMove.x][lastMove.y] = lastMovePossibleNumber[lastMove.indexPossibleMove + 1]
-        //            }
-//
-        //            const replace = possibleNumber[0]
-        //            
-        //            history.push({x: x, y: y, value: replace, indexPossibleMove: 0})
-//
-        //            this.toSolve[x][y] = replace
-        //        }
-        //    }
-        //}
+        return false
+    }
+
+    solver (): boolean {
+        return this.recursiveSolver()
     }
 
     SearchNullCase (): coordinate {
@@ -132,8 +98,8 @@ export default class solver {
     }
 
     canBeInBlock (number: coordinate, value: number): boolean {
-        const x: number = Math.floor(number.x / 3);
-        const y: number = Math.floor(number.y / 3);
+        const x: number = Math.floor(number.x / 3) * 3;
+        const y: number = Math.floor(number.y / 3) * 3;
 
         const numbers: numbers = [] 
 
