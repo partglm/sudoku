@@ -2,7 +2,7 @@ type mattrice = (number | null)[][]
 type numbers = (number | null)[]
 type num = (number | null)
 type coordinate = {x: number, y: number}
-type coordinateWithValue = {x: number, y: number, value: number}
+type HistoryOfCoordinate = {x: number, y: number, value: number, indexPossibleMove: number}
 
 export default class solver {
     toSolve: mattrice
@@ -15,28 +15,74 @@ export default class solver {
     }
 
     solver (): boolean {
-        const history: coordinateWithValue[] = []
+        const history: HistoryOfCoordinate[] = []
 
-        for(let y: number = 0; y < 9; y++) {   
-            for(let x: number = 0; x < 9; x++) {
-                const value: num = this.toSolve[x][y]
-                const pos: coordinate = {x: x, y: y}
+        while(this.SearchNullCase().x !== -1) {
+            const pos: coordinate = this.SearchNullCase()
+            const {x, y} = pos
 
-                if (value == null) {
-                    const possibleNumber: number[] = this.possibleNumber(pos)
+            const possibleNumber: number[] = this.possibleNumber(pos)
 
-                    console.log(possibleNumber)
-                    if (possibleNumber.length === 0) continue
-                    const replace = possibleNumber[0]
-                    
-                    history.push({x: x, y: y, value: replace})
+            if (possibleNumber.length === 0) {
+                const lastMove = history[history.length - 1]
+                const posLastMove = {x: lastMove.x, y: lastMove.y}
 
-                    this.toSolve[x][y] = replace
-                }
+                this.toSolve[lastMove.x][lastMove.y] = null
+                const lastMovePossibleNumber = this.possibleNumber(posLastMove)
+
+                this.toSolve[lastMove.x][lastMove.y] = lastMovePossibleNumber[lastMove.indexPossibleMove + 1]
             }
+
+            const replace = possibleNumber[0]
+                    
+            history.push({x: x, y: y, value: replace, indexPossibleMove: 0})
+                
+            this.toSolve[x][y] = replace
         }
 
         return true
+
+        //for(let y: number = 0; y < 9; y++) {   
+        //    for(let x: number = 0; x < 9; x++) {
+        //        const value: num = this.toSolve[x][y]
+        //        const pos: coordinate = {x: x, y: y}
+//
+        //        if (value == null) {
+        //            const possibleNumber: number[] = this.possibleNumber(pos)
+//
+        //            console.log(possibleNumber)
+        //            if (possibleNumber.length === 0) {
+        //                const lastMove = history[history.length - 1]
+        //                const posLastMove = {x: lastMove.x, y: lastMove.y}
+//
+        //                this.toSolve[lastMove.x][lastMove.y] = null
+        //                const lastMovePossibleNumber = this.possibleNumber(posLastMove)
+//
+        //                this.toSolve[lastMove.x][lastMove.y] = lastMovePossibleNumber[lastMove.indexPossibleMove + 1]
+        //            }
+//
+        //            const replace = possibleNumber[0]
+        //            
+        //            history.push({x: x, y: y, value: replace, indexPossibleMove: 0})
+//
+        //            this.toSolve[x][y] = replace
+        //        }
+        //    }
+        //}
+    }
+
+    SearchNullCase (): coordinate {
+        for(let y: number = 0; y < 9; y++) {   
+            for(let x: number = 0; x < 9; x++) {
+
+                if (this.toSolve[x][y] == null) {
+                    return {x: x, y: y}
+                }
+
+            }
+        }
+
+        return {x: -1, y: -1}
     }
 
     possibleNumber (pos: coordinate): number[] {
