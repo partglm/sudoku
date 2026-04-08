@@ -9,5 +9,14 @@ contextBridge.exposeInMainWorld("api", {
             console.error('Failed to load grille:', err)
             throw err
         }
+    },
+    async solver() {
+        try {
+            const mod = await import('../solver/solver.ts')
+            return mod.default
+        } catch (err) {
+            console.error('Failed to load grille:', err)
+            throw err
+        }
     }
 });

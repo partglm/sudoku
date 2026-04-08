@@ -2,7 +2,6 @@ type mattrice = (number | null)[][]
 type numbers = (number | null)[]
 type num = (number | null)
 type coordinate = {x: number, y: number}
-type HistoryOfCoordinate = {x: number, y: number, id: number, indexPossibleMove: number}
 
 export default class solver {
     toSolve: mattrice

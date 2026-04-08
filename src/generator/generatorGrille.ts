@@ -17,7 +17,6 @@ export default class grille extends permutator {
         [1,5,4,7,9,6,8,2,3],
         [2,3,9,8,4,1,5,6,7]
     ];
-    static SolvedMattrice: mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
     deletedCase: coordinate[] = []
     toDelete: number
     difficultyMap
@@ -35,7 +34,6 @@ export default class grille extends permutator {
 
     generateGrille (): mattrice {
         this.permutingThings()
-        grille.SolvedMattrice = grille.mattrice.map(row => [...row])
 
         this.deletingCase(this.toDelete)
 
