@@ -35,19 +35,76 @@ const buttonSolveP = document.getElementById('solveP')
 buttonSolveP.addEventListener('click', () => {
     const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
 
-    for (let y = 0; y < 9; y++) {
-        for (let x = 0; x < 9; x++) {
-            mattrice[x][y]
+    for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+            mattrice[x][y] = getValueMattrice(x,y)
         }
     }
 
-    const solution = new solver(grille.mattrice)
+    const solution = new solver(mattrice)
+
+    console.table(mattrice)
+
+    if (!solution.status) {
+        alert('the position have no solution')
+        return
+    }
 
     console.table(solution.toSolve)
     mattriceID.innerHTML = "";
 
     changeValueMattrice(solution.toSolve)
 })
+
+//create a null board
+const buttonNullBoard = document.getElementById('NullBoard')
+buttonNullBoard.addEventListener('click', () => {
+    const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
+
+    for (let y = 0; y < 9; y++) {
+        for (let x = 0; x < 9; x++) {
+            mattrice[x][y] = null
+        }
+    }
+
+    mattriceID.innerHTML = "";
+
+    changeValueMattrice(mattrice)
+})
+
+function getValueMattrice(x,y)  {
+    const caseElement = mattriceID.getElementsByClassName(`colonne${y} ligne${x} case`)
+
+    const valueDiv = getNumberDiv(caseElement)
+    if(valueDiv !== null) return valueDiv
+
+    const valueInput = getNumberInput(caseElement)
+    if(valueInput !== null) return valueInput
+
+    return null
+}
+
+function getNumberDiv (caseElement) {
+    const valueArr = caseElement[0].getElementsByTagName('div')
+
+    if (!valueArr.length) return null
+
+    const value = valueArr[0].textContent
+
+    return Number.parseInt(value)
+}
+
+function getNumberInput (caseElement) {
+    const valueArr = caseElement[0].getElementsByTagName('input')
+
+    if (!valueArr.length) return null
+
+    const value = valueArr[0].value
+
+    if (typeof value !== 'number') return null
+
+    return Number.parseInt(value)
+}
 
 //changing the board with a mattrice in input
 function changeValueMattrice(mattrice) {
