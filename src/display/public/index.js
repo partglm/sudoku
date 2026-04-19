@@ -10,6 +10,7 @@ const mattriceID = document.getElementById('mattrice')
 //initiate postion
 changeValueMattrice(grille.mattrice)
 
+//clear non number input
 document.addEventListener("input", (item) => { 
     if (item.target.tagName === "INPUT") {
         if (!item.target.value.match(/[0-9]/)) {
@@ -18,6 +19,12 @@ document.addEventListener("input", (item) => {
         }
     }
 })
+
+const inputContent = document.getElementById('inputContent')
+inputContent.onchange(() => {
+    
+})
+
 
 //solver for start postion
 const buttonSolveSV = document.getElementById('solveSV')
@@ -72,6 +79,12 @@ buttonNullBoard.addEventListener('click', () => {
     changeValueMattrice(mattrice)
 })
 
+//print the board
+const buttonPrintBoard = document.getElementById('printBoard')
+buttonPrintBoard.addEventListener('click', () => {
+    window.print()
+})
+
 function getValueMattrice(x,y)  {
     const caseElement = mattriceID.getElementsByClassName(`colonne${y} ligne${x} case`)
 
@@ -101,7 +114,7 @@ function getNumberInput (caseElement) {
 
     const value = valueArr[0].value
 
-    if (typeof value !== 'number') return null
+    if (value === '') return null
 
     return Number.parseInt(value)
 }
