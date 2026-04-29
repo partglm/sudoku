@@ -191,7 +191,7 @@ function changeValueMattrice(mattrice) {
                     button.forEach(el => {el.style.display = 'block'})
                 })
 
-                creatingButton(newElement, x, y)
+                creatingButton(newElement, x, y, mattrice)
 
                 newElement.appendChild(inputElement)
             }else{
@@ -206,9 +206,9 @@ function changeValueMattrice(mattrice) {
 }
 
 
-function creatingButton (newElement, x, y) {
+function creatingButton (newElement, x, y, mattrice) {
     for (let i = 1; i <= 9; i++) {
-        const possibleButton = new possible(grille.mattrice).possibleNumber({ x: x , y: y })
+        const possibleButton = new possible(mattrice).possibleNumber({ x: x , y: y })
         
         if (!possibleButton.includes(i)) continue
 
@@ -216,29 +216,80 @@ function creatingButton (newElement, x, y) {
         
         button.id = `button${i}`
         button.textContent = i
-        button.classList.add("buttonEL")*
+        button.classList.add("buttonEL")
 
-        button.addEventListener('click', (el)  => {
-                const buttonEL = el.target;
-                const value = buttonEL.textContent
-             
-                const caseDiv = buttonEL.parentElement;
-         
-              const inputEL = caseDiv.querySelector('input');
-                if (inputEL) {
-                    inputEL.value = value;
-                }
-            
-                const allButtons = caseDiv.querySelectorAll('button');
-                allButtons.forEach(btn => {
-                    btn.style.display = 'none';
-                });
-            
-                if (inputEL) {
-                    inputEL.style.display = 'block';
-                }
-        })
+        button.addEventListener('click', (el) => buttonEvent(el))
               
         newElement.appendChild(button)
+    }
+}
+
+function creatingButtonNOTstart (newElement, x, y) {    
+    const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
+
+    for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+            mattrice[x][y] = getValueMattrice(x,y)
+        }
+    }
+
+    for (let i = 1; i <= 9; i++) {
+        //check if it's an interactive case
+        const caseElement = mattriceID.getElementsByClassName(`colonne${y} ligne${x} case`)
+        
+        const divELement = caseElement[0].getElementsByTagName('div')
+        if (divELement[0]) return 
+
+        const inputElement = caseElement[0].getElementsByTagName('input')
+        if (inputElement[0].value != '') return
+
+        //fonction
+        const possibleButton = new possible(mattrice).possibleNumber({ x: x , y: y })
+        
+        if (!possibleButton.includes(i)) continue
+
+        const button =  document.createElement('button')
+        
+        button.id = `button${i}`
+        button.textContent = i
+        button.classList.add("buttonEL")
+
+        button.addEventListener('click', (el)  => buttonEvent(el))
+              
+        newElement.appendChild(button)
+    }
+}
+
+function buttonEvent (el) {
+    const buttonEL = el.target;
+    const value = buttonEL.textContent
+       
+    const caseDiv = buttonEL.parentElement;
+     
+    //donner la valeur du bouton a l'input 
+    const inputEL = caseDiv.querySelector('input');
+    if (inputEL) {
+        inputEL.value = value;
+    }
+          
+    //afficher les boutons
+    const allButtons = caseDiv.querySelectorAll('button');
+    allButtons.forEach(btn => {
+        btn.style.display = 'none';
+    });
+           
+    if (inputEL) {
+        inputEL.style.display = 'block';
+    }
+        
+    // recreate function init
+    for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+            const caseElement = mattriceID.getElementsByClassName(`colonne${y} ligne${x} case`)[0]
+            const buttonS = caseElement.getElementsByTagName('button')
+            Array.from(buttonS).forEach(el => el.remove())
+        
+            creatingButtonNOTstart(caseElement, x, y)
+        }
     }
 }
