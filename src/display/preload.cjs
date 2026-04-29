@@ -18,5 +18,14 @@ contextBridge.exposeInMainWorld("api", {
             console.error('Failed to load grille:', err)
             throw err
         }
+    },
+    async possible()  {
+        try {
+            const mod = await import('../solver/possible.ts')
+            return mod.default
+        } catch (err) {
+            console.error('Failed to load grille:', err)
+            throw err
+        }
     }
 });

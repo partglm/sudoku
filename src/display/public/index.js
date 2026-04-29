@@ -1,6 +1,7 @@
 /// <reference path="../types.d.ts" />
 import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
+import possible from '../../../dist/solver/possible.js'
 
 const instanceGrille = new grille()
 console.log(grille.mattrice)
@@ -180,37 +181,17 @@ function changeValueMattrice(mattrice) {
                 inputElement.type = 'text'
                 inputElement.maxLength = 1
                 inputElement.classList.add("inputEL")
-
-                //creating the 9 button for input
-                for (let i = 1; i <= 9; i++) {
-                    const button =  document.createElement('button')
+                inputElement.addEventListener('click', (el) => {
+                    el.target.value = ''
+                    const parent = el.target.parentElement
                     
-                    button.id = `button${i}`
-                    button.textContent = i
-                    button.classList.add("buttonEL")
-                    button.addEventListener('click', (el)  => {
-                            const buttonEL = el.target;
-                            const value = buttonEL.textContent
+                    if(!showNumber) return
 
-                            const caseDiv = buttonEL.parentElement;
+                    const button = parent.querySelectorAll('button')
+                    button.forEach(el => {el.style.display = 'block'})
+                })
 
-                            const inputEL = caseDiv.querySelector('input');
-                            if (inputEL) {
-                                inputEL.value = value;
-                            }
-                        
-                            const allButtons = caseDiv.querySelectorAll('button');
-                            allButtons.forEach(btn => {
-                                btn.style.display = 'none';
-                            });
-                        
-                            if (inputEL) {
-                                inputEL.style.display = 'block';
-                            }
-                    })
-
-                    newElement.appendChild(button)
-                }
+                creatingButton(newElement, x, y)
 
                 newElement.appendChild(inputElement)
             }else{
@@ -221,5 +202,43 @@ function changeValueMattrice(mattrice) {
             //adding the case to the grid
             mattriceID.appendChild(newElement)
         }
+    }
+}
+
+
+function creatingButton (newElement, x, y) {
+    for (let i = 1; i <= 9; i++) {
+        const possibleButton = new possible(grille.mattrice).possibleNumber({ x: x , y: y })
+        
+        if (!possibleButton.includes(i)) continue
+
+        const button =  document.createElement('button')
+        
+        button.id = `button${i}`
+        button.textContent = i
+        button.classList.add("buttonEL")*
+
+        button.addEventListener('click', (el)  => {
+                const buttonEL = el.target;
+                const value = buttonEL.textContent
+             
+                const caseDiv = buttonEL.parentElement;
+         
+              const inputEL = caseDiv.querySelector('input');
+                if (inputEL) {
+                    inputEL.value = value;
+                }
+            
+                const allButtons = caseDiv.querySelectorAll('button');
+                allButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            
+                if (inputEL) {
+                    inputEL.style.display = 'block';
+                }
+        })
+              
+        newElement.appendChild(button)
     }
 }
