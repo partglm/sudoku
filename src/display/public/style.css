@@ -97,7 +97,19 @@ body {
     background-color: #e8f0fe;
 }
 
-/* Buttons in 3x3 grid within case - targeting by button id instead of nth-child */
+/* Original numbers (from puzzle) - extra bold */
+.case > div:not(.inputEL):not(.buttonEL) {
+    font-weight: 900;
+}
+
+/* User input numbers - lighter weight */
+.case input {
+    font-weight: 400;
+}
+
+.case .buttonEL {
+    font-weight: 400;
+}
 .case .buttonEL {
     position: absolute;
     width: 33.33%;
