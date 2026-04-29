@@ -33,11 +33,18 @@ inputContent.addEventListener('change', () => {
         const buttonElementS = document.querySelectorAll('.buttonEL')
 
         inputElementS.forEach(el => {
-            el.style.display = 'none'
+            if(el.value == '') {
+                el.style.display = 'none'
+            }
         })
 
         buttonElementS.forEach(el => {
-            el.style.display = 'block'
+            const div = el.parentElement
+            const input = div.querySelector('input')
+
+            if (input.value == '') {
+                el.style.display = 'block'
+            }
         })
     }else{
         const inputElementS = document.querySelectorAll('.inputEL')
@@ -177,9 +184,31 @@ function changeValueMattrice(mattrice) {
                 //creating the 9 button for input
                 for (let i = 1; i <= 9; i++) {
                     const button =  document.createElement('button')
+                    
                     button.id = `button${i}`
                     button.textContent = i
                     button.classList.add("buttonEL")
+                    button.addEventListener('click', (el)  => {
+                            const buttonEL = el.target;
+                            const value = buttonEL.textContent
+
+                            const caseDiv = buttonEL.parentElement;
+
+                            const inputEL = caseDiv.querySelector('input');
+                            if (inputEL) {
+                                inputEL.value = value;
+                            }
+                        
+                            const allButtons = caseDiv.querySelectorAll('button');
+                            allButtons.forEach(btn => {
+                                btn.style.display = 'none';
+                            });
+                        
+                            if (inputEL) {
+                                inputEL.style.display = 'block';
+                            }
+                    })
+
                     newElement.appendChild(button)
                 }
 
