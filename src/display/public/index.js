@@ -20,11 +20,38 @@ document.addEventListener("input", (item) => {
     }
 })
 
-const inputContent = document.getElementById('inputContent')
-inputContent.onchange(() => {
-    
-})
+//change the type of input
+let showNumber = true
 
+const inputContent = document.getElementById('inputContent')
+inputContent.addEventListener('change', () => {
+    if (showNumber) showNumber = false
+    else showNumber = true
+
+    if (showNumber) {
+        const inputElementS = document.querySelectorAll('.inputEL')
+        const buttonElementS = document.querySelectorAll('.buttonEL')
+
+        inputElementS.forEach(el => {
+            el.style.display = 'none'
+        })
+
+        buttonElementS.forEach(el => {
+            el.style.display = 'block'
+        })
+    }else{
+        const inputElementS = document.querySelectorAll('.inputEL')
+        const buttonElementS = document.querySelectorAll('.buttonEL')
+
+        inputElementS.forEach(el => {
+            el.style.display = 'block'
+        })
+
+        buttonElementS.forEach(el => {
+            el.style.display = 'none'
+        })
+    }
+})
 
 //solver for start postion
 const buttonSolveSV = document.getElementById('solveSV')
@@ -119,7 +146,7 @@ function getNumberInput (caseElement) {
     return Number.parseInt(value)
 }
 
-//changing the board with a mattrice in input
+//changing the board witdh a mattrice in input
 function changeValueMattrice(mattrice) {
     //iterate trough each case
     for (let x = 0; x < 9; x++) {
@@ -137,6 +164,7 @@ function changeValueMattrice(mattrice) {
             const NumberElement = document.createElement('div')
             const inputElement = document.createElement('input')
 
+
             //adding the number
             const number = mattrice[x][y]
 
@@ -144,6 +172,16 @@ function changeValueMattrice(mattrice) {
             if (number == null) {
                 inputElement.type = 'text'
                 inputElement.maxLength = 1
+                inputElement.classList.add("inputEL")
+
+                //creating the 9 button for input
+                for (let i = 1; i <= 9; i++) {
+                    const button =  document.createElement('button')
+                    button.id = `button${i}`
+                    button.textContent = i
+                    button.classList.add("buttonEL")
+                    newElement.appendChild(button)
+                }
 
                 newElement.appendChild(inputElement)
             }else{
