@@ -3,7 +3,9 @@ import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
 import possible from '../../../dist/solver/possible.js'
 
-const instanceGrille = new grille()
+const difficulty = document.getElementById('select').value
+
+const instanceGrille = new grille(difficulty)
 console.log(grille.mattrice)
 
 const mattriceID = document.getElementById('mattrice')
@@ -185,7 +187,7 @@ function changeValueMattrice(mattrice) {
                     el.target.value = ''
                     const parent = el.target.parentElement
                     
-                    if(!showNumber) return
+                    if(showNumber) return
 
                     const button = parent.querySelectorAll('button')
                     button.forEach(el => {el.style.display = 'block'})
