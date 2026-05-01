@@ -3,7 +3,14 @@ import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
 import possible from '../../../dist/solver/possible.js'
 
-const difficulty = document.getElementById('select').value
+const selectDifficulty = document.getElementById('select')
+
+selectDifficulty.value = localStorage.getItem('difficulty')
+
+let difficulty = selectDifficulty.value
+if (difficulty == '') {
+    difficulty = 'hard'
+}
 
 const instanceGrille = new grille(difficulty)
 console.log(grille.mattrice)
@@ -21,6 +28,11 @@ document.addEventListener("input", (item) => {
             console.log("cleared an input")
         }
     }
+})
+
+//change the data json value for the difficulty chosen
+selectDifficulty.addEventListener("change", () => {
+    localStorage.setItem('difficulty', selectDifficulty.value)
 })
 
 //change the type of input
