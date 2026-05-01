@@ -1,124 +1,172 @@
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
+    justify-content: center;
+    min-height: 100dvh;
     margin: 0;
-    background-color: #f0f0f0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-sizing: border-box;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.controls label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #333;
 }
 
 #mattrice {
     position: relative;
-    width: 630px;
-    height: 630px;
+    width: 540px;
+    height: 540px;
 }
 
 .case {
     position: absolute;
-    border: 1px solid black;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #ccc;
     font-size: 24px;
     font-weight: bold;
     background-color: white;
     box-sizing: border-box;
 }
 
-input {
+/* Thick borders for 3x3 boxes */
+.ligne0.case { border-top: 2px solid black; }
+.ligne3.case { border-top: 2px solid black; }
+.ligne6.case { border-top: 2px solid black; }
+.ligne8.case { border-bottom: 2px solid black; }
+
+.colonne0.case { border-left: 2px solid black; }
+.colonne3.case { border-left: 2px solid black; }
+.colonne6.case { border-left: 2px solid black; }
+.colonne8.case { border-right: 2px solid black; }
+
+/* Position classes */
+.ligne0 { top: 0; }
+.ligne1 { top: 60px; }
+.ligne2 { top: 120px; }
+.ligne3 { top: 180px; }
+.ligne4 { top: 240px; }
+.ligne5 { top: 300px; }
+.ligne6 { top: 360px; }
+.ligne7 { top: 420px; }
+.ligne8 { top: 480px; }
+
+.colonne0 { left: 0; }
+.colonne1 { left: 60px; }
+.colonne2 { left: 120px; }
+.colonne3 { left: 180px; }
+.colonne4 { left: 240px; }
+.colonne5 { left: 300px; }
+.colonne6 { left: 360px; }
+.colonne7 { left: 420px; }
+.colonne8 { left: 480px; }
+
+.case input {
     width: 100%;
     height: 100%;
     border: none;
     background: transparent;
     text-align: center;
     outline: none;
-    font-size: 27px;
+    font-size: 24px;
     font-weight: 900;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-.ligne0.case {
-    border-top: 3px solid black;
-}
-.ligne3.case {
-    border-top: 3px solid black;
-}
-.ligne6.case {
-    border-top: 3px solid black;
-}
-.ligne8.case {
-    border-bottom: 3px solid black;
+.case input:focus {
+    background-color: #e8f0fe;
 }
 
-.colonne0.case {
-    border-left: 3px solid black;
-}
-.colonne3.case {
-    border-left: 3px solid black;
-}
-.colonne6.case {
-    border-left: 3px solid black;
-}
-.colonne8.case {
-    border-right: 3px solid black;
+/* Original numbers (from puzzle) - extra bold */
+.case > div:not(.inputEL):not(.buttonEL) {
+    font-weight: 900;
 }
 
-.ligne0 {
-    top: 0px;
-}
-.ligne1 {
-    top: 70px;
-}
-.ligne2 {
-    top: 140px;
-}
-.ligne3 {
-    top: 210px;
-}
-.ligne4 {
-    top: 280px;
-}
-.ligne5 {
-    top: 350px;
-}
-.ligne6 {
-    top: 420px;
-}
-.ligne7 {
-    top: 490px;
-}
-.ligne8 {
-    top: 560px;
+/* User input numbers - lighter weight */
+.case input {
+    font-weight: 400;
 }
 
-.colonne0 {
-    left: 0px;
+.case .buttonEL {
+    font-weight: 400;
 }
-.colonne1 {
-    left: 70px;
+.case .buttonEL {
+    position: absolute;
+    width: 33.33%;
+    height: 33.33%;
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
-.colonne2 {
-    left: 140px;
+
+/* Position buttons in 3x3 grid using id selectors */
+.case .buttonEL#button1 { top: 0; left: 0; }
+.case .buttonEL#button2 { top: 0; left: 33.33%; }
+.case .buttonEL#button3 { top: 0; left: 66.66%; }
+.case .buttonEL#button4 { top: 33.33%; left: 0; }
+.case .buttonEL#button5 { top: 33.33%; left: 33.33%; }
+.case .buttonEL#button6 { top: 33.33%; left: 66.66%; }
+.case .buttonEL#button7 { top: 66.66%; left: 0; }
+.case .buttonEL#button8 { top: 66.66%; left: 33.33%; }
+.case .buttonEL#button9 { top: 66.66%; left: 66.66%; }
+
+/* Hide button 0 */
+.case .buttonEL#button0 {
+    display: none;
 }
-.colonne3 {
-    left: 210px;
+
+.case .buttonEL:hover {
+    background-color: #e8f0fe;
+    color: #333;
+    border-radius: 2px;
 }
-.colonne4 {
-    left: 280px;
-}
-.colonne5 {
-    left: 350px;
-}
-.colonne6 {
-    left: 420px;
-}
-.colonne7 {
-    left: 490px;
-}
-.colonne8 {
-    left: 560px;
+
+@media print {
+    body {
+        background-color: white;
+    }
+    body * {
+        visibility: hidden;
+    }
+    #mattrice, #mattrice * {
+        visibility: visible;
+    }
+    #mattrice {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .controls {
+        display: none;
+    }
 }

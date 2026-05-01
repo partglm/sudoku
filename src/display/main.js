@@ -7,8 +7,8 @@ let mainWindow = null
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
         show: true,
         webPreferences: {
             preload: path.join(__dirname, "preload.cjs"),
@@ -24,6 +24,7 @@ function createWindow() {
         mainWindow = null
     })
 }
+
 
 app.whenReady().then(createWindow)
 
