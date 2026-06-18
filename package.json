@@ -22,11 +22,9 @@
     "test": "jest",
     "dev": "npm run build && node a.js"
   },
-  "dependencies": {
-    "electron": "^39.8.5"
-  },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "electron": "^42.4.1",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"

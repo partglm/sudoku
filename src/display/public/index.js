@@ -3,13 +3,19 @@ import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
 import possible from '../../../dist/solver/possible.js'
 
+
+
 const selectDifficulty = document.getElementById('select')
 
-selectDifficulty.value = localStorage.getItem('difficulty')
-
+const StorageValue =  localStorage.getItem('difficulty')
+selectDifficulty.value = StorageValue
 let difficulty = selectDifficulty.value
-if (difficulty == '') {
+
+if (StorageValue == '') {
     difficulty = 'hard'
+    localStorage.setItem('difficulty', 'hard')
+}else{
+    difficulty = StorageValue
 }
 
 const instanceGrille = new grille(difficulty)
