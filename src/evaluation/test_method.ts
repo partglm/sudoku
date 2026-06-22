@@ -63,31 +63,39 @@
 // 0–2 Facile | 2–4 Moyen | 4–6 Difficile | 6–8 Expert | 8+ Diabolique
 // ------------------------------------------------------------
 type mattrice = (number | null)[][]
+type returnFuncEval = {use: boolean, mattrice: mattrice}
 
 import scan from './0-1/scanning.js'
 
 export default class Test_Methods {
     difficulty: number;
     max_method: number;
-    list_method: { func: (arg0: mattrice) => boolean; value: number; }[];
+    list_method: { func: (arg0: mattrice) => returnFuncEval; value: number; }[];
     board: mattrice;
 
-    constructor(mattrice: mattrice) {
+    constructor(board: mattrice) {
         this.max_method = 0
         this.list_method = [{func: scan.scan, value: 0.2}]
-        this.board = mattrice.map(row => [...row]);
-    
+        this.board = board.map(row => [...row]);
+        console.table(board)
         this.difficulty = this.init()
     }
 
-
+ 
     init (): number {
         this.list_method.forEach(method => {
-            if (!method.func(this.board)) return 
+            let result: returnFuncEval;
+            do {
+                result = method.func(this.board)
+                if (!result.use) return 
 
-            if (this.max_method <= method.value) {
-                this.max_method = method.value
-            }
+                console.table(result.mattrice)
+                this.board = result.mattrice
+                
+                if (this.max_method <= method.value) {
+                    this.max_method = method.value
+                }
+            }while(result.use==true) 
         })
 
         return this.max_method

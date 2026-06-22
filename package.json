@@ -19,6 +19,7 @@
     "build": "npx tsc",
     "start": "npm run build && electron .",
     "debug": "electron --inspect=5858 .",
+    "electron": "npx electron .",
     "test": "jest",
     "dev": "npm run build && node a.js"
   },
