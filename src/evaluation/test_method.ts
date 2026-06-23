@@ -98,6 +98,7 @@ export default class Test_Methods {
             }while(result.use==true) 
         })
 
+        console.table(this.board)
         return this.max_method
     }
 }

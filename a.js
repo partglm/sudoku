@@ -8,7 +8,7 @@ const board=[[null,null,null,null,null,null,1,6,null],
 [null,9,null,null,4,null,6,null,2],
 [null,null,null,null,3,null,null,4,9]]
 
-import Scan from './dist/evaluation/0-1/scanning.js'
+import Test_Methods from './dist/evaluation/test_method.js'
 
-const a = Scan.scan(board).mattrice
-console.table(a)
+const a = new Test_Methods(board)
+console.log(a.max_method)
