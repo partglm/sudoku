@@ -17,7 +17,7 @@ export default class Scan {
             const pos = result.whereCanBePlace
             if (result.useful && pos.x != -1) {
                 useful = true
-                
+
                 board[pos.x][pos.y] = num
                 break
             }
@@ -31,7 +31,7 @@ export default class Scan {
         let breaking: boolean = false
 
         for (let blockX: number = 0; blockX < 3; blockX++) {
-            for (let blockY: number = 0; blockY < 3; blockY++) {        
+            for (let blockY: number = 0; blockY < 3; blockY++) {      
                 let result: coordinateAndNumber = Scan.block(board, num, {x: blockX, y: blockY})
                 
                 if (result.howMuchInBlock == 1) {
@@ -55,8 +55,10 @@ export default class Scan {
             for (let y: number = 0; y < 3; y++) {
                 const possible: Possible = new Possible(board)
                 const pos: coordinate = {x: x + blockPos.x * 3, y: y + blockPos.y * 3}
+
+                if (board[pos.x][pos.y] != null) continue
                 const isPossible: boolean = possible.isPossible({x: pos.x, y: pos.y}, num)
-                
+
                 if (isPossible) {
                     howMuchInBlock++
                     whereCanBePlace = {x: pos.x, y: pos.y}
