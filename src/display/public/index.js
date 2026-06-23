@@ -3,7 +3,7 @@ import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
 import possible from '../../../dist/solver/possible.js'
 
-
+import fs from "fs"
 
 const selectDifficulty = document.getElementById('select')
 
@@ -312,4 +312,17 @@ function buttonEvent (el) {
             creatingButtonNOTstart(caseElement, x, y)
         }
     }
+}
+
+//export
+function toExport() {
+    const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
+
+    for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+            mattrice[x][y] = getValueMattrice(x,y)
+        }
+    }
+
+    fs.writeFileSync('./export.mine', mattrice)
 }

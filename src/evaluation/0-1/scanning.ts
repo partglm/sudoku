@@ -13,14 +13,13 @@ export default class Scan {
 
         for (let num: number = 1; num <= 9; num++) {        
             const result: coordinateAndBoolean = Scan.board(board, num)
-            
-            console.log(result)
+
             const pos = result.whereCanBePlace
             if (result.useful && pos.x != -1) {
                 useful = true
-                console.log(pos)
-                console.log(num)
                 
+                console.log(pos.x, pos.y +'\n'+ num)
+
                 board[pos.x][pos.y] = num
                 break
             }

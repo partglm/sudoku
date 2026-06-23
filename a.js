@@ -11,4 +11,4 @@ const board=[[null,null,null,null,null,null,1,6,null],
 import Test_Methods from './dist/evaluation/test_method.js'
 
 const a = new Test_Methods(board)
-console.log(a.max_method)
+console.table(a.board)

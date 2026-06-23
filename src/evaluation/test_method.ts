@@ -77,7 +77,6 @@ export default class Test_Methods {
         this.max_method = 0
         this.list_method = [{func: scan.scan, value: 0.2}]
         this.board = board.map(row => [...row]);
-        console.table(board)
         this.difficulty = this.init()
     }
 
@@ -87,9 +86,8 @@ export default class Test_Methods {
             let result: returnFuncEval;
             do {
                 result = method.func(this.board)
-                if (!result.use) return 
-
-                console.table(result.mattrice)
+                if (!result.use) return
+                
                 this.board = result.mattrice
                 
                 if (this.max_method <= method.value) {
@@ -97,8 +95,6 @@ export default class Test_Methods {
                 }
             }while(result.use==true) 
         })
-
-        console.table(this.board)
         return this.max_method
     }
 }
