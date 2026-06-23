@@ -54,7 +54,7 @@ export default class Scan {
         for (let x: number = 0; x < 3; x++) {
             for (let y: number = 0; y < 3; y++) {
                 const possible: Possible = new Possible(board)
-                const pos: coordinate = {x: x+(blockPos.x*3),y: y+(blockPos.y*3)}
+                const pos: coordinate = {x: x + blockPos.x * 3, y: y + blockPos.y * 3}
                 const isPossible: boolean = possible.isPossible({x: pos.x, y: pos.y}, num)
                 
                 if (isPossible) {

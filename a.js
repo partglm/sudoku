@@ -2,12 +2,12 @@ const board=[[null,null,null,null,null,null,1,6,null],[null,null,4,null,null,nul
 
 import Test_Methods from './dist/evaluation/test_method.js'
 
-//console.table(board)
-//const a = new Test_Methods(board)
-//console.table(a.board)
+console.table(board)
+const a = new Test_Methods(board)
+console.table(a.board)
 
-import a from './dist/solver/possible.js'
-const b = new a(board).isPossible({x:1, y:2, value: 1})
+//import a from './dist/solver/possible.js'
+//const b = new a(board).isPossible({x:1, y:2}, 1)
 //const c = new a(board).canBeInLigne(1,2)
-console.log(b)
+//console.log(b)
 //console.log(c)
