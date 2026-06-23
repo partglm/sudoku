@@ -309,10 +309,11 @@ function buttonEvent (el) {
         
             creatingButtonNOTstart(caseElement, x, y)
         }
-    }
+    } 
 }
 
 //export
+const exportEl = document.getElementById('export').onclick = toExport()
 function toExport() {
     const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
 
@@ -323,4 +324,12 @@ function toExport() {
     }
 
     window.api.writeFile('./export.mine', mattrice)
+}
+
+//import i'm a witch ??? 
+const importEL = document.getElementById('import').onclick = toImport()
+async function toImport() {
+    const data = await window.api.readFile('./export.mine')
+    console.table(data)
+    changeValueMattrice(data)
 }

@@ -32,5 +32,9 @@ contextBridge.exposeInMainWorld("api", {
     writeFile(path, data) {
         const content = typeof data === "string" ? data : JSON.stringify(data)
         return fs.writeFileSync(path, content)
+    },
+    async readFile(path) {
+        let content = await fs.readFile(path, 'utf-8')
+        return content
     }
 });
