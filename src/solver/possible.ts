@@ -24,8 +24,8 @@ export default class possible {
 
     isPossible (pos: coordinate, value: number): boolean {
         if (!this.canBeInBlock(pos, value)) return false 
-        if (!this.canBeInColonne(value, pos.y)) return false 
-        if (!this.canBeInLigne(value, pos.x)) return false 
+        if (!this.canBeInColonne(value, pos.x)) return false 
+        if (!this.canBeInLigne(value, pos.y)) return false 
         
         return true
     }
@@ -44,13 +44,8 @@ export default class possible {
     }
 
     canBeInLigne (number: number, ligne: number): boolean {
-        const numbers: numbers = [] 
-
-        for(let i: number = 0; i < 9; i++) {
-            const num: num = this.toSolve[ligne][i]
-            numbers.push(num)
-        }
-
+        const numbers: numbers = this.toSolve[ligne]
+        console.log(numbers)
         if (numbers.includes(number)) return false
 
         return true

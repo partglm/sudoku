@@ -18,8 +18,6 @@ export default class Scan {
             if (result.useful && pos.x != -1) {
                 useful = true
                 
-                console.log(pos.x, pos.y +'\n'+ num)
-
                 board[pos.x][pos.y] = num
                 break
             }

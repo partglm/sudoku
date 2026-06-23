@@ -174,6 +174,7 @@ function getNumberInput (caseElement) {
 
 //changing the board witdh a mattrice in input
 function changeValueMattrice(mattrice) {
+    mattriceID.innerHTML = ''
     //iterate trough each case
     for (let x = 0; x < 9; x++) {
             const classLigne = `ligne${x}`

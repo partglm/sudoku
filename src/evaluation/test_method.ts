@@ -84,10 +84,10 @@ export default class Test_Methods {
     init (): number {
         this.list_method.forEach(method => {
             let result: returnFuncEval;
-            do {
+            do{
                 result = method.func(this.board)
-                if (!result.use) return
                 
+                if (!result.use) return
                 this.board = result.mattrice
                 
                 if (this.max_method <= method.value) {

@@ -34,7 +34,7 @@ contextBridge.exposeInMainWorld("api", {
         return fs.writeFileSync(path, content)
     },
     async readFile(path) {
-        let content = await fs.readFile(path, 'utf-8')
+        let content = await fs.promises.readFile(path, 'utf-8')
         return content
     }
 });
