@@ -30,6 +30,8 @@ export default class Scan {
     static board(board: mattrice, num: number): coordinateAndBoolean {
         let useful: boolean = false
         let whereCanBePlace: coordinate = {x: -1, y: -1}
+        let breaking: boolean = false
+
         for (let blockX: number = 0; blockX < 3; blockX++) {
             for (let blockY: number = 0; blockY < 3; blockY++) {
                 const arg1HowMuch: number = 0
@@ -39,16 +41,17 @@ export default class Scan {
                 if (result.howMuchInBlock == 1) {
                     useful = true
                     whereCanBePlace = result.whereCanBePlace
+                    breaking = true
                     break
                 }
             }
+
+            if (breaking) break
         }
         return {useful: useful, whereCanBePlace: whereCanBePlace}
     }
     
-    static block(board: mattrice, num: number, howMuchInBlock: number, whereCanBePlace: coordinate, blockPos: coordinate): coordinateAndNumber {
-        let where: coordinate = whereCanBePlace
-        let HowMuch: number = howMuchInBlock
+    static block(board: mattrice, num: number, HowMuch: number, where: coordinate, blockPos: coordinate): coordinateAndNumber {
         for (let x: number = 1; x <= 3; x++) {
             for (let y: number = 1; y <= 3; y++) {
                 const possible: Possible = new Possible(board)
