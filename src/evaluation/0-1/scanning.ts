@@ -30,31 +30,34 @@ export default class Scan {
     static board(board: mattrice, num: number): coordinateAndBoolean {
         let useful: boolean = false
         let whereCanBePlace: coordinate = {x: -1, y: -1}
-        for (let block: number = 1; block <= 9; block++) {
+        for (let blockX: number = 0; blockX < 3; blockX++) {
+            for (let blockY: number = 0; blockY < 3; blockY++) {
                 const arg1HowMuch: number = 0
                 const arg2Where: coordinate = {x: -1, y: -1}
                 
-                let result: coordinateAndNumber = Scan.block(board, num, arg1HowMuch, arg2Where)
+                let result: coordinateAndNumber = Scan.block(board, num, arg1HowMuch, arg2Where, {x: blockX, y: blockY})
                 if (result.howMuchInBlock == 1) {
                     useful = true
                     whereCanBePlace = result.whereCanBePlace
                     break
                 }
+            }
         }
         return {useful: useful, whereCanBePlace: whereCanBePlace}
     }
     
-    static block(board: mattrice, num: number, howMuchInBlock: number, whereCanBePlace: coordinate): coordinateAndNumber {
+    static block(board: mattrice, num: number, howMuchInBlock: number, whereCanBePlace: coordinate, blockPos: coordinate): coordinateAndNumber {
         let where: coordinate = whereCanBePlace
         let HowMuch: number = howMuchInBlock
-        for (let x: number = 1; x < 3; x++) {
-            for (let y: number = 1; y < 3; y++) {
+        for (let x: number = 1; x <= 3; x++) {
+            for (let y: number = 1; y <= 3; y++) {
                 const possible: Possible = new Possible(board)
-                const isPossible: boolean = possible.isPossible({x: x, y: y}, num)
+                const pos: coordinate = {x: x+(blockPos.x*3),y: y+(blockPos.y*3)}
+                const isPossible: boolean = possible.isPossible({x: pos.x, y: pos.y}, num)
                 
                 if (isPossible) {
                     HowMuch++
-                    where = {x: x, y: y}
+                    where = {x: pos.x, y: pos.y}
                 }
             }
         }
