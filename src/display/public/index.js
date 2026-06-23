@@ -3,8 +3,6 @@ import grille from '../../../dist/generator/generatorGrille.js'
 import solver from '../../../dist/solver/solver.js'
 import possible from '../../../dist/solver/possible.js'
 
-import fs from "fs"
-
 const selectDifficulty = document.getElementById('select')
 
 const StorageValue =  localStorage.getItem('difficulty')
@@ -324,5 +322,5 @@ function toExport() {
         }
     }
 
-    fs.writeFileSync('./export.mine', mattrice)
+    window.api.writeFile('./export.mine', mattrice)
 }

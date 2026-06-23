@@ -1,4 +1,5 @@
 const { contextBridge } = require("electron")
+const fs = require("fs")
 
 contextBridge.exposeInMainWorld("api", {
     async grille() {
@@ -27,5 +28,9 @@ contextBridge.exposeInMainWorld("api", {
             console.error('Failed to load grille:', err)
             throw err
         }
+    },
+    writeFile(path, data) {
+        const content = typeof data === "string" ? data : JSON.stringify(data)
+        return fs.writeFileSync(path, content)
     }
 });
