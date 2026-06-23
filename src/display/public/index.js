@@ -313,7 +313,8 @@ function buttonEvent (el) {
 }
 
 //export
-const exportEl = document.getElementById('export').onclick = toExport()
+const exportEl = document.getElementById('export')
+exportEl.addEventListener('click', toExport)
 function toExport() {
     const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
 
@@ -327,9 +328,18 @@ function toExport() {
 }
 
 //import i'm a witch ??? 
-const importEL = document.getElementById('import').onclick = toImport()
+const importEL = document.getElementById('import')
+importEL.addEventListener('click', toImport)
 async function toImport() {
-    const data = await window.api.readFile('./export.mine')
+    const content = await window.api.readFile('./export.mine')
+    let data
+    try {
+        data = JSON.parse(content)
+    } catch (e) {
+        console.error('Failed to parse import file:', e)
+        alert('Le fichier importé est invalide')
+        return
+    }
     console.table(data)
     changeValueMattrice(data)
 }
