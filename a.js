@@ -12,13 +12,3 @@ import Scan from './dist/evaluation/0-1/scanning.js'
 
 const a = Scan.scan(board).mattrice
 console.table(a)
-
-//page 38, parmis garantie optionnel nom + cmb simple indéxé majorés
-
-//2 index equiv, verif tout rentrés + rentrés valerur en dure (bleu)
-// : description + format
-//ecrire dégager 0/ valeur nulle
- // -> si couleur entete = bleu alors valeur en dure, 
- //I62
- //inclure si colonne bleu remettre valeur dans tableau
-  //mettre en carac bleu si en dure
