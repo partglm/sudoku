@@ -28,8 +28,8 @@ export default class Scan {
     static board(board: mattrice, num: number): coordinateAndBoolean {
         let useful: boolean = false
         let whereCanBePlace: coordinate = {x: -1, y: -1}
-        let breaking: boolean = false
 
+        loopBX:
         for (let blockX: number = 0; blockX < 3; blockX++) {
             for (let blockY: number = 0; blockY < 3; blockY++) {      
                 let result: coordinateAndNumber = Scan.block(board, num, {x: blockX, y: blockY})
@@ -37,12 +37,10 @@ export default class Scan {
                 if (result.howMuchInBlock == 1) {
                     useful = true
                     whereCanBePlace = result.whereCanBePlace
-                    breaking = true
-                    break
+                    break loopBX
                 }
             }
 
-            if (breaking) break
         }
         return {useful: useful, whereCanBePlace: whereCanBePlace}
     }

@@ -66,7 +66,7 @@ type mattrice = (number | null)[][]
 type returnFuncEval = {use: boolean, mattrice: mattrice}
 
 import Scan from './0-1/scanning.js'
-//import CrossHatching from '../../dist/evaluation/0-1/scanning.js'
+import CrossHatching from './0-1/cross_hatching.js'
 
 export default class Test_Methods {
     difficulty: number;
@@ -76,8 +76,8 @@ export default class Test_Methods {
 
     constructor(board: mattrice) {
         this.max_method = 0
-        this.list_method = [{func: Scan.scan, value: 0.2},
-        
+        this.list_method = [//{func: Scan.scan, value: 0.2},
+        {func: CrossHatching.hatching, value: 0.3}
         ]
         this.board = board.map(row => [...row]);
         this.difficulty = this.init()
