@@ -54,9 +54,10 @@ export default class CrossHatching {
                     }
                 }
                 
-                if (howMuchNumber+howMuchUndef != 8 && pos.x == -1) continue
+                if (howMuchNumber+howMuchUndef != 8 || pos.x == -1) continue
 
                 board[pos.x][pos.y] = num
+                undefboard[pos.x][pos.y] = num
                 useful = true
 
                 break loopBX

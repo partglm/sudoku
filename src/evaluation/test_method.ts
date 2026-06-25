@@ -76,8 +76,8 @@ export default class Test_Methods {
 
     constructor(board: mattrice) {
         this.max_method = 0
-        this.list_method = [//{func: Scan.scan, value: 0.2},
-        {func: CrossHatching.hatching, value: 0.3}
+        this.list_method = [{func: Scan.scan, value: 0.2},
+        //{func: CrossHatching.hatching, value: 0.3}
         ]
         this.board = board.map(row => [...row]);
         this.difficulty = this.init()

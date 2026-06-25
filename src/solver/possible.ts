@@ -44,8 +44,13 @@ export default class possible {
     }
 
     canBeInLigne (number: number, ligne: number): boolean {
-        const numbers: numbers = this.toSolve[ligne]
-        
+        const numbers: numbers = [] 
+
+        for(let i: number = 0; i < 9; i++) {
+            const num: num = this.toSolve[ligne][i]
+            numbers.push(num)
+        }
+
         if (numbers.includes(number)) return false
 
         return true
