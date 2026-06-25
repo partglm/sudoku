@@ -13,15 +13,15 @@ export default class CrossHatching {
         let Cboard: impossibleMattrice = board.map(row => [...row])
         let resultfind: returnFuncEval = {use: false, mattrice: board}
 
-        for (let num: number = 0; num < 9; num++) {
-            const resultLigne: impossibleMattrice = this.ligne(Cboard, board, num)
+        for (let num: number = 1; num < 10; num++) {
+            const resultLigne: impossibleMattrice = CrossHatching.ligne(Cboard, board, num)
             Cboard = resultLigne
-            const resultColonne: impossibleMattrice = this.colonne(Cboard, board, num)
+            const resultColonne: impossibleMattrice = CrossHatching.colonne(Cboard, board, num)
             Cboard = resultColonne
-            const resultBlock: impossibleMattrice = this.block(Cboard, board, num)
+            const resultBlock: impossibleMattrice = CrossHatching.block(Cboard, board, num)
             Cboard = resultBlock
 
-            resultfind = this.find(Cboard, board, num)
+            resultfind = CrossHatching.find(Cboard, board, num)
         }
 
         return {use: resultfind.use, mattrice: resultfind.mattrice}
@@ -34,25 +34,32 @@ export default class CrossHatching {
         for (let blockx: number = 0; blockx < 3; blockx++) {
             for (let blocky: number = 0; blocky < 3; blocky++) {
                 let howMuchUndef: number = 0
-                let howMuchNotNull: number = 0
+                let howMuchNumber: number = 0
+                const toAddX: number = blockx * 3
+                const toAddY: number = blocky * 3
+                let pos: coordinate = {x: -1, y: -1}
 
                 for (let x: number = 0; x < 3; x++) {
                     for (let y: number = 0; y < 3; y++) {
-                        const toAddX: number = blockx * 3
-                        const toAddY: number = blocky * 3
                         const toCheck: undefnum = undefboard[x+toAddX][y+toAddY]
 
-                        if (toCheck == null) howMuchNotNull++ 
-                        if (toCheck == undefined) howMuchUndef++
-
-                        if (howMuchNotNull+howMuchUndef != 9) continue
-
-                        board[x+toAddX][y+toAddY] = num
-                        useful = true
-                        break loopBX
+                        if (typeof toCheck == 'number') {
+                            howMuchNumber++; continue
+                        }
+                        if (typeof toCheck == 'undefined') {
+                            howMuchUndef++; continue
+                        }
+ 
+                        pos = {x: x + toAddX, y: y + toAddY}
                     }
                 }
+                
+                if (howMuchNumber+howMuchUndef != 8 && pos.x == -1) continue
 
+                board[pos.x][pos.y] = num
+                useful = true
+
+                break loopBX
             }
         }     
         return {use: useful, mattrice: board}
