@@ -10,7 +10,7 @@ import Possible from '../../solver/possible.js'
 
 export default class CrossHatching {
     static hatching (board: mattrice): returnFuncEval {
-        let resultfind: returnFuncEval = {use: false, mattrice: board}
+        let useful: boolean = false
 
         for (let num: number = 1; num < 10; num++) {
             let Cboard: impossibleMattrice = board.map(row => [...row])
@@ -21,10 +21,15 @@ export default class CrossHatching {
             const resultBlock: impossibleMattrice = CrossHatching.block(Cboard, board, num)
             Cboard = resultBlock
 
-            resultfind = CrossHatching.find(Cboard, board, num)
+            const result = CrossHatching.find(Cboard, board, num)
+
+            useful = result.use
+            board = result.mattrice
+
+            if (useful) break
         }
 
-        return {use: resultfind.use, mattrice: resultfind.mattrice}
+        return {use: useful, mattrice: board}
     }
 
     static find(undefboard: impossibleMattrice, board: mattrice, num: number): returnFuncEval {
@@ -60,17 +65,17 @@ export default class CrossHatching {
                 undefboard[pos.x][pos.y] = num
                 useful = true
 
-                break loopBX
+               break loopBX
             }
         }     
         return {use: useful, mattrice: board}
     }
 
-    static block (undefboard: impossibleMattrice, board: mattrice, which: number): impossibleMattrice  {
+    static block (undefboard: impossibleMattrice, board: mattrice, num: number): impossibleMattrice  {
         for (let blockx: number = 0; blockx < 3; blockx++) {
             for (let blocky: number = 0; blocky < 3; blocky++) {
                 const possible: Possible = new Possible(board)
-                const isPossible: boolean = possible.canBeInBlock({x: blockx*3, y: blocky*3}, which)
+                const isPossible: boolean = possible.canBeInBlock({x: blockx*3, y: blocky*3}, num)
                 
                 if (isPossible) continue
 
@@ -91,10 +96,10 @@ export default class CrossHatching {
         return undefboard
     }
 
-    static ligne (undefboard: impossibleMattrice, board: mattrice, which: number): impossibleMattrice {
+    static ligne (undefboard: impossibleMattrice, board: mattrice, num: number): impossibleMattrice {
         for (let ligne: number = 0; ligne < 9; ligne++) {
             const possible: Possible = new Possible(board)
-            const isPossible: boolean = possible.canBeInLigne(which, ligne)
+            const isPossible: boolean = possible.canBeInLigne(num, ligne)
             
             if (isPossible) continue
 
@@ -109,10 +114,10 @@ export default class CrossHatching {
         return undefboard
     }
 
-        static colonne (undefboard: impossibleMattrice, board: mattrice, which: number): impossibleMattrice {
+        static colonne (undefboard: impossibleMattrice, board: mattrice, num: number): impossibleMattrice {
         for (let colonne: number = 0; colonne < 9; colonne++) {
             const possible: Possible = new Possible(board)
-            const isPossible: boolean = possible.canBeInColonne(which, colonne)
+            const isPossible: boolean = possible.canBeInColonne(num, colonne)
             
             if (isPossible) continue
 
