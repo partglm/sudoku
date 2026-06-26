@@ -10,10 +10,10 @@ import Possible from '../../solver/possible.js'
 
 export default class CrossHatching {
     static hatching (board: mattrice): returnFuncEval {
-        let Cboard: impossibleMattrice = board.map(row => [...row])
         let resultfind: returnFuncEval = {use: false, mattrice: board}
 
         for (let num: number = 1; num < 10; num++) {
+            let Cboard: impossibleMattrice = board.map(row => [...row])
             const resultLigne: impossibleMattrice = CrossHatching.ligne(Cboard, board, num)
             Cboard = resultLigne
             const resultColonne: impossibleMattrice = CrossHatching.colonne(Cboard, board, num)
