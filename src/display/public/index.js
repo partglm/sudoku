@@ -38,12 +38,31 @@ selectDifficulty.addEventListener("change", () => {
 //change the type of input
 let showNumber = true
 
+        //iniate no input case
+    const inputElementS = document.querySelectorAll('.inputEL')
+
+    inputElementS.forEach(el => {
+        if(el.value == '') {
+            el.style.display = 'none'
+        }
+    })
+
 const inputContent = document.getElementById('inputContent')
 inputContent.addEventListener('change', () => {
     if (showNumber) showNumber = false
     else showNumber = true
 
     if (showNumber) {
+        for (let x = 0; x < 9; x++) {
+            for (let y = 0; y < 9; y++) {
+                const caseElement = mattriceID.getElementsByClassName(`colonne${y} ligne${x} case`)[0]
+                const buttonS = caseElement.getElementsByTagName('button')
+                Array.from(buttonS).forEach(el => el.remove())
+            
+                creatingButtonNOTstart(caseElement, x, y)
+            }
+        }
+
         const inputElementS = document.querySelectorAll('.inputEL')
         const buttonElementS = document.querySelectorAll('.buttonEL')
 
@@ -196,13 +215,12 @@ function changeValueMattrice(mattrice) {
                 inputElement.maxLength = 1
                 inputElement.classList.add("inputEL")
                 inputElement.addEventListener('click', (el) => {
+                    if (el.target.value == '') return
+
                     el.target.value = ''
                     const parent = el.target.parentElement
-                    
-                    if(showNumber) return
 
-                    const button = parent.querySelectorAll('button')
-                    button.forEach(el => {el.style.display = 'block'})
+                    if(showNumber) buttonEvent(el)
                 })
 
                 creatingButton(newElement, x, y, mattrice)
