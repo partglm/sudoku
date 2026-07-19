@@ -5,11 +5,15 @@ import possible from '../../../dist/solver/possible.js'
 
 const selectDifficulty = document.getElementById('select')
 
-selectDifficulty.value = localStorage.getItem('difficulty')
-
+const StorageValue =  localStorage.getItem('difficulty')
+selectDifficulty.value = StorageValue
 let difficulty = selectDifficulty.value
-if (difficulty == '') {
+
+if (StorageValue == '') {
     difficulty = 'hard'
+    localStorage.setItem('difficulty', 'hard')
+}else{
+    difficulty = StorageValue
 }
 
 const instanceGrille = new grille(difficulty)
@@ -189,6 +193,7 @@ function getNumberInput (caseElement) {
 
 //changing the board witdh a mattrice in input
 function changeValueMattrice(mattrice) {
+    mattriceID.innerHTML = ''
     //iterate trough each case
     for (let x = 0; x < 9; x++) {
             const classLigne = `ligne${x}`
@@ -323,5 +328,37 @@ function buttonEvent (el) {
         
             creatingButtonNOTstart(caseElement, x, y)
         }
+    } 
+}
+
+//export
+const exportEl = document.getElementById('export')
+exportEl.addEventListener('click', toExport)
+function toExport() {
+    const mattrice = Array.from({ length: 9 },()=>Array(9).fill(0));
+
+    for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+            mattrice[x][y] = getValueMattrice(x,y)
+        }
     }
+
+    window.api.writeFile('./export.mine', mattrice)
+}
+
+//import i'm a witch ??? 
+const importEL = document.getElementById('import')
+importEL.addEventListener('click', toImport)
+async function toImport() {
+    const content = await window.api.readFile('./export.mine')
+    let data
+    try {
+        data = JSON.parse(content)
+    } catch (e) {
+        console.error('Failed to parse import file:', e)
+        alert('Le fichier importé est invalide')
+        return
+    }
+    console.table(data)
+    changeValueMattrice(data)
 }
